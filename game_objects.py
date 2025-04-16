@@ -3,6 +3,7 @@ import pygame
 class Rail():
     """a class to model the wooden sides of the pool table, purely for aesthetics"""
     def __init__(self, settings, screen, table, pocket):
+
         #initialise attributes
         self.screen = screen
         self.settings = settings
@@ -17,7 +18,6 @@ class Rail():
 
     def draw_rail(self):
         """draw the rails to the screen"""
-        #pygame.draw.rect(self.screen, self.colour, self.rect)
         pygame.draw.rect(self.screen, self.colour, self.tall_rect)
         pygame.draw.rect(self.screen, self.colour, self.wide_rect)
         pygame.draw.circle(self.screen, self.colour, (self.table.rect.topleft), self.thickness)
@@ -29,13 +29,13 @@ class Rail():
 class Cushion():
     """A class to model the cushions of the pool table, they will deal with colissions with balls"""
     def __init__(self, settings, screen, table, pocket1, side, position, pocket2):
+
         #initialise attributes
         self.screen = screen
         self.settings = settings
         self.table = table
         self.pocket1 = pocket1
         self.pocket2 = pocket2
-        #self.colour = (142, 84, 35)
         self.colour = settings.cushion_colour
         self.side = side
         self.cushion_width = settings.cushion_width
@@ -62,13 +62,13 @@ class Cushion():
        
     def draw_cushion(self):
         """Draw the cushion to the screen"""
-        
         pygame.draw.rect(self.screen, self.colour, self.rect)
+
 
 class Triangle():
     def __init__(self, position, table, pocket, settings, screen):
-        #x3 and y3 are the edges of the triangle we never touch
 
+        #x3 and y3 are the edges of the triangle we never touch
         self.colour = settings.cushion_colour
         self.screen = screen
         self.width = settings.cushion_width
@@ -146,11 +146,9 @@ class Triangle():
             self.x3, self.y3 = self.x1, self.y2
             self.triangle = ((self.x1, self.y1), (self.x2, self.y2), (self.x3, self.y3))
 
-
-
-
     def draw_triangle(self):
         pygame.draw.polygon(self.screen, self.colour, self.triangle)
+
 
 class Pocket_hitbox():
     """A class to model a hitbox behind a pocket in case the ball passes the pocket without registering a hit"""
@@ -168,6 +166,7 @@ class Pocket_hitbox():
 
 
 class Line():
+    """A clas to model the division lines on a pool table . Purely aesthetic"""
     def __init__(self, position, settings, screen, table):
         self.screen = screen
         self.colour = settings.line_colour

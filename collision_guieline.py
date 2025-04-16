@@ -1,7 +1,7 @@
 import restitution_2 as res2
 import pygame
 
-# THIS file governs the white line drawm to screen whilst player is aiming.
+# THIS file contains a single function, which draws the trajectory lines from the cue ball and target ball and ghost ball
 
 def draw_colission_paths(white_ball, ghost_ball, target_ball, table, settings, screen):
     """Draw 2 guidelines showing the path the ghost ball and colliding ball will take once they meet

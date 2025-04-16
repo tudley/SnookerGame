@@ -19,10 +19,12 @@ class Guideline():
         self.c = self.startpoint_y - (self.gradient * self.startpoint_x)
 
     def find_startpoint(self, cue_ball):
+        """ update the guidlines 'startpoint' attribute to the cue balls centerx, centery"""
         self.startpoint_x, self.startpoint_y = cue_ball.centerx, cue_ball.centery
         self.startpoint = (self.startpoint_x, self.startpoint_y)
 
     def find_endpoint(self):
+        """ update the guidlines 'endpoint' attribute to mouse_x, mouxe_y"""
         self.mousepoint_x, self.mousepoint_y = pygame.mouse.get_pos()
         self.mousepoint = self.mousepoint_x, self.mousepoint_y
         try:

@@ -3,6 +3,7 @@ from settings import Settings
 from ball import Ball
 import sys
 import game_functions as gf
+import game_modules as gm
 from table import Table
 from pocket import Pocket
 from game_objects import Rail
@@ -16,8 +17,6 @@ from cue import Cue
 from player import Player
 
 pygame.init()
-
-
 
 # create all the objects for the game
 clock = pygame.time.Clock()
@@ -173,7 +172,6 @@ def rungame():
     
     while True:
 
-        
         # check events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -200,18 +198,18 @@ def rungame():
    
         #handle the 'deciding shot' phase
         if settings.deciding_shot == True:  
-            gf.handle_aiming(settings, balls, white_ball, guideline, ghost_ball, table, screen, cue, pocketed_balls, cue_line)
+            gm.handle_aiming(settings, balls, white_ball, guideline, ghost_ball, table, screen, cue, pocketed_balls, cue_line)
 
             # reset shot stats
             gf.reset_shot_stats(settings)
 
         # handle the 'balls moving' phase    
         if settings.moving_balls == True:
-            gf.move_balls(balls, cushions, pockets, pocketed_balls, triangles, settings, table)
+            gm.move_balls(balls, cushions, pockets, pocketed_balls, triangles, settings, table)
 
         # handle evaluating balls phase
         if settings.evaluating_shot == True:
-            gf.evaluate_shot(settings, players, balls, choice_button, choice_button2)
+            gm.evaluate_shot(settings, players, balls, choice_button, choice_button2)
             
         #print('end frame')
         pygame.display.flip()

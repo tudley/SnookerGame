@@ -1,5 +1,6 @@
 
 class Player():
+    """A simple class to model a player. This is where you store the 'meta' attributes of a player, their team, advantage ect."""
     def __init__(self, name):
         self.name = name
         self.team = None

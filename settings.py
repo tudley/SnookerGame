@@ -14,12 +14,10 @@ class Settings():
         self.table_width = self.table_height * (48 / 92)
         self.table_left = 50
         self.table_top = 50
-        
         self.table_colour = (10, 108, 3)
 
         #ball settings
         self.ball_radius = self.table_height * 2.25 / 100
-        #self.ball_radius = self.table_height * 2.25 / 88
         self.cue_ball_col = (255, 255, 240)
         self.red_ball_col = (125, 20, 35)
         self.yellow_ball_col = (252, 222, 12)
@@ -84,7 +82,6 @@ class Settings():
         self.cue_height = self.border_height - 10
 
         # percetnage button dimenssions
-
         self.percentage_colour = self.shoot_button_colour
         self.percentage_left = self.table_left + self.table_width + 2 * self.ball_radius + 10
         self.percentage_height = self.border_top
