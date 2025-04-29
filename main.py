@@ -8,13 +8,13 @@ from table import Table
 from pocket import Pocket
 from game_objects import Rail
 from game_objects import Cushion
-from game_objects import Pocket_hitbox
 from game_objects import Triangle
 from game_objects import Line
 from button import Button, Choice_button
 from guideline import Guideline
 from cue import Cue
 from player import Player
+from aiming_system import AimingSystem
 
 import shot_decision as sd
 
@@ -40,9 +40,6 @@ pockets.append(top_right_pocket)
 pockets.append(top_left_pocket)
 pockets.append(bottom_right_pocket)
 pockets.append(bottom_left_pocket)
-
-# create a box aorund a pocket for better clarity
-pocket_hitbox = Pocket_hitbox(settings, screen, mid_right_pocket)
 
 # this is the background around the table
 rails = Rail(settings, screen, table, mid_right_pocket)
@@ -79,7 +76,6 @@ lines.append(black_spot)
 
 # create the 'triangles' which make up the edges of the cushions
 triangles = []
-
 triangle_tl_t = Triangle('topleft top', table, top_left_pocket, settings, screen)
 triangle_t_l = Triangle('top left', table, top_left_pocket, settings, screen)
 triangle_t_r = Triangle('top right', table, top_right_pocket, settings, screen)
@@ -92,7 +88,6 @@ triangle_bl_b = Triangle('botleft bot', table, bottom_left_pocket, settings, scr
 triangle_br_b = Triangle('botright bot', table, bottom_right_pocket, settings, screen)
 triangle_b_l = Triangle('bot left', table, bottom_left_pocket, settings, screen)
 triangle_b_r = Triangle('bot right', table, bottom_right_pocket, settings, screen)
-
 triangles.append(triangle_tl_t)
 triangles.append(triangle_t_l)
 triangles.append(triangle_t_r)
@@ -115,7 +110,6 @@ top_right_cushion = Cushion(settings, screen, table, top_right_pocket, 'right', 
 bot_left_cushion = Cushion(settings, screen, table, mid_left_pocket, 'left', 'botleft', bottom_left_pocket)
 bot_right_cushion = Cushion(settings, screen, table, mid_right_pocket, 'right', 'botright', bottom_right_pocket)
 bot_cushion = Cushion(settings, screen, table, bottom_left_pocket, 'bot', 'bot', bottom_right_pocket)
-
 cushions.append(top_cushion)
 cushions.append(top_left_cushion)
 cushions.append(top_right_cushion)
@@ -123,42 +117,19 @@ cushions.append(bot_left_cushion)
 cushions.append(bot_right_cushion)
 cushions.append(bot_cushion)
 
-# create the 2 players
-player1 = Player('player 1')
-player2 = Player('player 2')
 
-# place the balls at random on the screen
+# place the balls on the screen
 white_ball.centerx, white_ball.centery = (table.rect.centerx - 100, table.rect.centery - 200)
-#white_ball.name = 'white'
-
 yellow_ball.centerx, yellow_ball.centery = (table.rect.centerx, table.rect.centery)
-#yellow_ball.name = 'yellow'
 yellow_ball.x_vel = 10
-
 red_ball.centerx, red_ball.centery = (table.rect.centerx - red_ball.radius - 30, table.rect.centery - 25)
-#red_ball.name = 'red'
-
 yellow_ball2.centerx, yellow_ball2.centery = (table.rect.centerx - 120, table.rect.centery + 100)
-#yellow_ball2.name = 'yellow'
-
 red_ball2.centerx, red_ball2.centery = (table.rect.centerx + red_ball.radius + 30, table.rect.centery + 200)
-#red_ball2.name = 'red'
-#red_ball2.x_vel = 5
-#red_ball2.y_vel = 5
-
 black_ball.centerx, black_ball.centery = (table.rect.centerx + red_ball.radius + 5, table.rect.centery - 45)
-#black_ball.name = 'black'
+
 
 # create the cue visual
 cue = Cue(settings, screen)
-
-# create the buttons
-shoot_button = Button(settings, screen, 'shoot', settings.shoot_rect)
-guideline = Guideline(settings, screen, white_ball, table)
-percentage_button = Button(settings, screen, cue.percentage, settings.percentage_rect)
-choice_button = Button(settings, screen, 'Please chose the colour', settings.choice1_rect)
-choice_button2 = Choice_button(settings, screen, 'you wish to play as:', settings.choice2_rect)
-
 
 # create the 2 players
 player1 = Player('player 1')
@@ -167,8 +138,17 @@ players = [player1, player2]
 settings.active_player = players[0]
 settings.inactive_player = players[1]
 
-
+# create the buttons
+shoot_button = Button(settings, screen, 'shoot', settings.shoot_rect)
+guideline = Guideline(settings, screen, white_ball, table)
+percentage_button = Button(settings, screen, cue.percentage, settings.percentage_rect)
+choice_button = Button(settings, screen, 'Please chose the colour', settings.choice1_rect)
+choice_button2 = Choice_button(settings, screen, 'you wish to play as:', settings.choice2_rect)
 player_button = Button(settings, screen, (settings.active_player.name + 'team: ' +  str(settings.active_player.team) + '. advantage: ' +  str(settings.active_player.advantage)), settings.player_rect)
+
+
+# Here I create the AimingSystem object, to handle the aiming phase of the game
+aiming_system = AimingSystem(settings, table, screen, guideline, cue, pocketed_balls, balls, white_ball, cue_line, ghost_ball)
 
 def rungame():
     
@@ -196,14 +176,11 @@ def rungame():
 
 
         #draw the screen
-        gf.draw_screen(screen, balls, settings, table, pockets, rails, cushions, pocketed_balls, pocket_hitbox, triangles, lines, shoot_button, ghost_ball, cue, percentage_button, player_button)
+        gf.draw_screen(screen, balls, settings, table, pockets, rails, cushions, pocketed_balls, triangles, lines, shoot_button, cue, percentage_button, player_button)
    
         #handle the 'deciding shot' phase
         if settings.deciding_shot == True:  
-            gm.handle_aiming(settings, balls, white_ball, guideline, ghost_ball, table, screen, cue, pocketed_balls, cue_line)
-
-            # reset shot stats
-            gf.reset_shot_stats(settings)
+            aiming_system.aim()
 
         # handle the 'balls moving' phase    
         if settings.moving_balls == True:
@@ -213,13 +190,8 @@ def rungame():
         if settings.evaluating_shot == True:
             sd.evaluate_shot(settings, players, balls, choice_button, choice_button2)
             
-        #print('end frame')
         pygame.display.flip()
         clock.tick(60)
   
-
-
-        
-
 rungame()
 

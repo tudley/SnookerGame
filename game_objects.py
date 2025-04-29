@@ -150,20 +150,6 @@ class Triangle():
         pygame.draw.polygon(self.screen, self.colour, self.triangle)
 
 
-class Pocket_hitbox():
-    """A class to model a hitbox behind a pocket in case the ball passes the pocket without registering a hit"""
-    def __init__(self, settings, screen, pocket):
-        self.settings = settings
-        self.screen = screen
-        self.colour = (50, 50, 50)
-        self.centerx = pocket.centerx
-        self.centery = pocket.centery
-        self.width = 2 * pocket.radius
-        self.rect = pygame.Rect((self.centerx - self.width / 2), (self.centery - self.width / 2), self.width, self.width)
-
-    def draw_hitbox(self):
-        pygame.draw.rect(self.screen, self.colour, self.rect)
-
 
 class Line():
     """A clas to model the division lines on a pool table . Purely aesthetic"""

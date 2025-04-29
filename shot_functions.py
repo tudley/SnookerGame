@@ -1,6 +1,7 @@
 
 
 def auto_assign_teams(settings):
+    """Auto assigns both players a team based on the colour of the ball pocketed"""
     settings.active_player.team = settings.balls_pocketed_in_turn[0].name
     if settings.balls_pocketed_in_turn[0].name == 'yellow':
         settings.inactive_player.team = 'red'
@@ -8,25 +9,28 @@ def auto_assign_teams(settings):
         settings.inactive_player.team = 'yellow'
 
 def assign_teams(settings, choice_button2, choice_button):
+    """Player has the ability to chose their team from potting 2 differrent colours"""
     settings.player_chose_team = True
     choice_button2.draw_choice_button() 
     choice_button.draw_button() 
 
-
 def check_gameover(settings):
+    """Player on the black pots another ball with it"""
     if settings.active_player.team == 'black':
         for ball in settings.balls_pocketed_in_turn:
             if ball.name == 'black':
                 settings.gameover = True
 
-
 def end_evaluation(settings):
+    """Ends the 'evaluation' phase of the game, reactivates the 'deciding shot' phase"""
     settings.evaluating_shot = False
     settings.deciding_shot = True
+    settings.first_contact = None
     for ball in settings.balls_pocketed_in_turn.copy():
         settings.balls_pocketed_in_turn.remove(ball)
 
 def give_advantage(settings):
+    """Give the inactive player the advantage"""
     settings.inactive_player.advantage = True
 
 def swap_active_player(players, settings):
@@ -44,7 +48,6 @@ def check_foul1(settings):
         if ball.name == "white":
             settings.active_player.foul1 = True
             print(settings.active_player.name, ' has potted the white')
-
 
 def check_foul2(settings):
     """check if the player hits the opponents ball first"""

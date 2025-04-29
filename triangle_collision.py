@@ -4,6 +4,10 @@ import sys
 from time import sleep
 import random as ran
 
+ # THE FOLLOWING DOCSTRINGS ARE FROM AN EARLIER REVISION.
+ # NOW REMAINS TO PROVE A BALL WILL 'BOUNCE' OFF A RAIL AT 45 DEGREES EVEN WITH MINIMAL OVERLAP
+ 
+
 """
 pygame.init()
 screen = pygame.display.set_mode((700, 700))

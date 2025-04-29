@@ -23,6 +23,7 @@ class Settings():
         self.yellow_ball_col = (252, 222, 12)
         self.black_ball_col = (0, 0, 0)
         self.green_ball_col = (10, 220, 30)
+        self.max_speed = 10
 
         #rail settings
         self.rail_colour = (142, 84, 35)
