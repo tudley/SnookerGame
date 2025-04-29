@@ -44,7 +44,7 @@ def move_balls(balls, cushions, pockets, pocketed_balls, triangles, settings, ta
     #update the balls positions
     gf.update_ball_positions(balls)
     gf.check_for_no_speed(balls, settings)
-    print('the first colour ball that was hit is ', settings.first_contact)
+    #print('the first colour ball that was hit is ', settings.first_contact)
 
 
 def handle_aiming(settings, balls, white_ball, guideline, ghost_ball, table, screen, cue, pocketed_balls, cue_line):
@@ -75,13 +75,14 @@ def handle_aiming(settings, balls, white_ball, guideline, ghost_ball, table, scr
     # draw the guidline
     guideline.draw_full_line(balls2, ghost_ball)
 
+    # if the ghost ball is interacting with another ball, return that ball
+    coliding_ball = guideline.draw_ghost_ball(balls2, ghost_ball)
+
     # if guidline intersects with a ball, draw the ghost ball
     if ghost_ball.active == True:
         ghost_ball.draw()
         gf.draw_colission_paths(white_ball, ghost_ball, coliding_ball, table, settings, screen)
 
-    # if the ghost ball is interacting with another ball, return that ball
-    coliding_ball = guideline.draw_ghost_ball(balls2, ghost_ball)
     
     # if the user clicks on the cue, assign power to the shot
     if settings.deciding_power == True:

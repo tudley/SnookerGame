@@ -16,6 +16,8 @@ from guideline import Guideline
 from cue import Cue
 from player import Player
 
+import shot_decision as sd
+
 pygame.init()
 
 # create all the objects for the game
@@ -209,7 +211,7 @@ def rungame():
 
         # handle evaluating balls phase
         if settings.evaluating_shot == True:
-            gm.evaluate_shot(settings, players, balls, choice_button, choice_button2)
+            sd.evaluate_shot(settings, players, balls, choice_button, choice_button2)
             
         #print('end frame')
         pygame.display.flip()

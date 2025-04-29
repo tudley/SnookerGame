@@ -233,7 +233,9 @@ def check_foul2(settings):
     if settings.first_contact == settings.inactive_player.team:
         settings.active_player.foul2 = True
         print(settings.active_player.name, ' has hit the opponents ball first')
-
+        return True
+    else:
+        return False
 
 def check_foul3(settings):
     """check if the player pockets an opponents ball"""
@@ -242,6 +244,13 @@ def check_foul3(settings):
             settings.active_player.foul3 = True
             print(settings.active_player.name, 'has pocketed their opponents ball')
 
+def check_foul4(settings):
+    if settings.first_contact == None:
+        settings.active_player.foul4 = True
+        print(settings.active_player.name, ' did not make contact with any balls')
+        return True
+    else:
+        return False
 
 def check_gameover(settings):
     # method 1: player is not yet supposed to pot the black yet does
@@ -272,6 +281,8 @@ def check_if_player_has_potted_all_their_balls(settings, balls):
         print('player has potted all their balls and now needs to pot the black')
         settings.active_player.team = 'black'
 
+def give_advantage(settings):
+    settings.inactive_player.advantage = True
 
 
 def swap_active_player(players, settings):
