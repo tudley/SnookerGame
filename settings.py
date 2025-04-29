@@ -62,7 +62,7 @@ class Settings():
         self.player_chose_team = False
 
         # player settings
-        self.player_rect = pygame.Rect(self.table_left, self.table_top - self.pocket_radius, 500, self.pocket_radius)
+        self.player_rect = pygame.Rect(self.table_left - 100, self.table_top - self.pocket_radius, 500, self.pocket_radius)
         self.active_player = None
         self.inactive_player = None
 

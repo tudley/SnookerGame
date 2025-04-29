@@ -1,4 +1,5 @@
 import pygame
+import pygame.font
 from settings import Settings
 from ball import Ball
 import sys
@@ -145,7 +146,7 @@ percentage_button = Button(settings, screen, cue.percentage, settings.percentage
 choice_button = Button(settings, screen, 'Please chose the colour', settings.choice1_rect)
 choice_button2 = Choice_button(settings, screen, 'you wish to play as:', settings.choice2_rect)
 player_button = Button(settings, screen, (settings.active_player.name + 'team: ' +  str(settings.active_player.team) + '. advantage: ' +  str(settings.active_player.advantage)), settings.player_rect)
-
+player_button.font = pygame.font.SysFont(None, 28)
 
 # Here I create the AimingSystem object, to handle the aiming phase of the game
 aiming_system = AimingSystem(settings, table, screen, guideline, cue, pocketed_balls, balls, white_ball, cue_line, ghost_ball)
